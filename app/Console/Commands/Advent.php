@@ -40,7 +40,13 @@ class Advent extends Command
      */
     public function handle()
     {
+        $start = microtime(true);
+
         $this->day1();
+        $this->day2();
+
+        $finish = (microtime(true) - $start) * 1000;
+        $this->line('All days took: '.$finish.'ms');
     }
 
     /**
@@ -88,5 +94,60 @@ class Advent extends Command
                 }
             }
         }
+    }
+
+    /**
+     * Password Philosophy
+     * https://adventofcode.com/2020/day/2
+     *
+     * @return void
+     */
+    private function day2()
+    {
+        $this->info('Day 2: Password Philosophy');
+
+        $start = microtime(true);
+
+        $csv = array_map('str_getcsv', file(storage_path('app/day2.csv')));
+        $validPasswords = collect($csv)->filter(function($line) {
+            $parts = explode(':', $line[0]);
+            $password = trim($parts[1]);
+            $parts = explode(' ', $parts[0]);
+            $letter = trim($parts[1]);
+            $parts = explode('-', $parts[0]);
+
+            $occurrences = substr_count($password, $letter);
+
+            return $occurrences >= $parts[0] && $occurrences <= $parts[1];
+        });
+
+        $time = (microtime(true) - $start) * 1000;
+        $this->table(['Part 1: Answer'], [
+            [$validPasswords->count()]
+        ]);
+        $this->line('took: '.$time.'ms');
+
+        $start = microtime(true);
+
+        $validPasswords = collect($csv)->filter(function($line) {
+            $parts = explode(':', $line[0]);
+            $password = trim($parts[1]);
+            $parts = explode(' ', $parts[0]);
+            $letter = trim($parts[1]);
+            $parts = explode('-', $parts[0]);
+
+            $pos1 = substr($password, $parts[0] - 1, 1) == $letter;
+            $pos2 = substr($password, $parts[1] - 1, 1) == $letter;
+
+            if ($pos1 && $pos2) return false;
+
+            return $pos1 || $pos2;
+        });
+
+        $time = (microtime(true) - $start) * 1000;
+        $this->table(['Part 2: Answer'], [
+            [$validPasswords->count()]
+        ]);
+        $this->line('took: '.$time.'ms');
     }
 }
