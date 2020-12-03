@@ -1,0 +1,81 @@
+<?php
+
+namespace App\Advent\Days;
+
+use App\Advent\Day;
+
+class Day{{ day }} {
+    use Day;
+
+    public $title = 'Day {{ day }}: {{ title }}';
+
+    /**
+     * Complete the puzzle.
+     *
+     * @return self
+     */
+    public function __invoke(): self
+    {
+        $this->part1();
+        $this->part2();
+        return $this;
+    }
+
+    /**
+     * Complete part one of the puzzle.
+     *
+     * @return void
+     */
+    public function part1()
+    {
+        $this->start();
+
+        $lines = collect(explode("\n", $this->getInput()));
+
+        // do the puzzle!
+
+        $this->finish();
+
+        $this->addPart([
+            'table' => [
+                'headings' => [],
+                'data' => [[]],
+            ],
+            'time' => $this->getTime(),
+        ]);
+    }
+
+    /**
+     * Complete part two of the puzzle.
+     *
+     * @return void
+     */
+    public function part2()
+    {
+        $this->start();
+
+        $lines = collect(explode("\n", $this->getInput()));
+
+        // do the puzzle!
+
+        $this->finish();
+
+        $this->addPart([
+            'table' => [
+                'headings' => [],
+                'data' => [[]],
+            ],
+            'time' => $this->getTime(),
+        ]);
+    }
+
+    /**
+     * Get the input for the puzzle.
+     *
+     * @return string
+     */
+    private function getInput(): string
+    {
+        return '';
+    }
+}
