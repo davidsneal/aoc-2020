@@ -26,7 +26,7 @@ class Day{{ day }} {
      *
      * @return void
      */
-    public function part1()
+    private function part1()
     {
         $this->start();
 
@@ -38,7 +38,7 @@ class Day{{ day }} {
 
         $this->addPart([
             'table' => [
-                'headings' => [],
+                'headings' => ['Part 1: Answer'],
                 'data' => [[]],
             ],
             'time' => $this->getTime(),
@@ -50,7 +50,7 @@ class Day{{ day }} {
      *
      * @return void
      */
-    public function part2()
+    private function part2()
     {
         $this->start();
 
@@ -62,7 +62,7 @@ class Day{{ day }} {
 
         $this->addPart([
             'table' => [
-                'headings' => [],
+                'headings' => ['Part 2: Answer'],
                 'data' => [[]],
             ],
             'time' => $this->getTime(),
