@@ -30,7 +30,7 @@ class Day{{ day }} {
     {
         $this->start();
 
-        $lines = collect(explode("\n", $this->getInput()));
+        $lines = explode("\n", $this->getInput());
 
         // do the puzzle!
 
@@ -54,7 +54,7 @@ class Day{{ day }} {
     {
         $this->start();
 
-        $lines = collect(explode("\n", $this->getInput()));
+        $lines = explode("\n", $this->getInput());
 
         // do the puzzle!
 
