@@ -76,37 +76,31 @@ class Day13 {
         $this->start();
 
         $lines = explode("\n", $this->getInput());
+        $buses = explode(",",$lines[1]);
+        $n = 0;
+        $inc = (int) $buses[0];
 
-        $buses = str_getcsv($lines[1]);
-        $min = 100000000000000;
-        $times = (int) ($min / (int) $buses[0]);
-        $result = null;
-        $length = count($buses);
+        for($times = 1; $times < count($buses); $times++){
+            if($buses[$times] === "x") continue;
 
-        while (! $result) {
-            $sequenced = [];
-            $current = $buses[0] * $times;
-            $sequenced[] = $current;
+            $first = 0;
 
-            foreach ($buses as $i => $bus) {
-                if ($i > 0) {
-                    if ($this->canDepartNextMinute($bus, $current)) {
-                        $current++;
-                        $sequenced[] = $current;
+            while(true) {
+                $bus = (int)$buses[$times];
+                if (floor(($n + $times) / $bus) == ($n + $times) / $bus) {
+                    if ($first == 0) {
+                        if ($times == count($buses) -1) {
+                            $result = $n;
+                        }
+
+                        $first = $n;
                     } else {
+                        $inc = $n - $first;
                         break;
                     }
                 }
-            }
 
-            $times++;
-
-            if (count($sequenced) > 37) {
-                echo count($sequenced).": $current \n";
-            }
-
-            if (count($sequenced) === $length) {
-                $result = $sequenced[0];
+                $n += $inc;
             }
         }
 
@@ -119,20 +113,6 @@ class Day13 {
             ],
             'time' => $this->getTime(),
         ]);
-    }
-
-    /**
-     * Check if a given bus can depart the following minute.
-     *
-     * @param string $id
-     * @param integer $previous
-     * @return boolean
-     */
-    private function canDepartNextMinute(string $id, int $previous)
-    {
-        if ($id === 'x') return true;
-
-        return ($previous + 1) % (int) $id == 0;
     }
 
     /**
