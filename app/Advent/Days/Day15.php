@@ -78,33 +78,31 @@ class Day15 {
         $this->start();
 
         $bits = str_getcsv($this->getInput());
-        $numbers = [];
+        $occurences = [];
 
         foreach ($bits as $i => $number) {
-            $numbers[$i + 1] = (int) $number;
+            $occurences[(int) $number][] = $i + 1;
         }
 
-        $i = count($numbers);
-        $last = $numbers[$i];
+        $i = count($occurences);
+        $last = (int) $bits[$i - 1];
 
         while ($i < 30000000) {
-            $occurences = array_keys($numbers, $last);
+            $occurences[$last] ??= [];
+            $i++;
 
-            if (count($occurences) == 1) {
-                $numbers[] = $last = 0;
+            if (count($occurences[$last]) == 1) {
+                $last = 0;
+                $occurences[$last][] = $i;
             } else {
-                rsort($occurences);
-                $numbers[] = $last = $occurences[0] - $occurences[1];
-
-                if (count($occurences) == 3) unset($numbers[$occurences[2]]);
+                $last = $occurences[$last][count($occurences[$last]) - 1] - $occurences[$last][count($occurences[$last]) - 2];
+                $occurences[$last][] = $i;
             }
 
             if ($i % 100000 == 0) echo number_format($i)."\n";
-
-            $i++;
         }
 
-        $result = $numbers[$i];
+        $result = $last;
 
         $this->finish();
 
